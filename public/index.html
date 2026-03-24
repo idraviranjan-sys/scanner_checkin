@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#7c3aed" />
+  <title>ZeptoNow | Vehicle Check-In</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- html5-qrcode for camera-based barcode/QR scanning -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-z">Z</span>eptoNow
+      </div>
+      <div class="header-title">Vehicle Check-In</div>
+    </div>
+  </header>
+
+  <!-- ── Main ───────────────────────────────────────────────── -->
+  <main id="app">
+
+    <!-- Step 1 · Location Check -->
+    <section id="step-location" class="step active">
+      <div class="card">
+        <div class="step-icon">📍</div>
+        <h2>Location Verification</h2>
+        <p class="step-desc">We need your location to verify you are within <strong>1 km</strong> of the Mother Hub.</p>
+        <button id="btn-get-location" class="btn btn-primary btn-full">
+          <span class="btn-icon">🔍</span> Detect My Location
+        </button>
+        <div id="location-status" class="status-msg hidden"></div>
+      </div>
+    </section>
+
+    <!-- Step 2 · Barcode Scan -->
+    <section id="step-scan" class="step">
+      <div class="card">
+        <div class="step-badge success">
+          <span>✓</span> Location Verified
+        </div>
+        <div id="mh-info" class="mh-badge"></div>
+
+        <div class="step-icon">📦</div>
+        <h2>Scan PO Barcode</h2>
+        <p class="step-desc">Point your camera at the barcode on the PO / invoice sheet.</p>
+
+        <div id="scanner-container">
+          <div id="qr-reader"></div>
+        </div>
+
+        <div class="divider-text">— or enter manually —</div>
+
+        <div class="input-group">
+          <input type="text" id="manual-barcode" placeholder="Type barcode / PO number…" autocomplete="off" autocorrect="off" spellcheck="false" />
+          <button id="btn-manual-submit" class="btn btn-secondary">Look Up</button>
+        </div>
+
+        <div id="scan-status" class="status-msg hidden"></div>
+      </div>
+    </section>
+
+    <!-- Step 3 · PO Details & Check-In -->
+    <section id="step-checkin" class="step">
+      <div class="card">
+        <div class="step-badge success"><span>✓</span> PO Found</div>
+
+        <div class="step-icon">🚚</div>
+        <h2>Confirm Check-In</h2>
+
+        <div id="po-details" class="po-details-grid"></div>
+
+        <button id="btn-checkin" class="btn btn-primary btn-full btn-lg">
+          <span class="btn-icon">✅</span> Confirm Check-In
+        </button>
+        <button id="btn-scan-another" class="btn btn-ghost btn-full">Scan a different barcode</button>
+
+        <div id="checkin-status" class="status-msg hidden"></div>
+      </div>
+    </section>
+
+    <!-- Step 4 · Success -->
+    <section id="step-success" class="step">
+      <div class="card text-center">
+        <div class="success-animation">
+          <div class="success-circle">✓</div>
+        </div>
+        <h2>Checked In!</h2>
+        <div id="success-details" class="success-details"></div>
+        <button id="btn-new-checkin" class="btn btn-primary btn-full">Check In Another PO</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Spinner overlay ────────────────────────────────────── -->
+  <div id="spinner-overlay" class="spinner-overlay hidden">
+    <div class="spinner"></div>
+    <div id="spinner-text" class="spinner-text">Please wait…</div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
